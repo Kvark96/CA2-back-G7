@@ -31,10 +31,9 @@ public class Populator {
         
         EntityManager em = emf.createEntityManager();
         
-        User u = new User("Peter","HH1234");
-        u.addRole(new Role("admin"));
-       
-     
+        User u = new User("Valdemar","Vindersen");
+        Role userRole = new Role("user"); 
+        u.addRole(userRole);
        // EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
        // FacadeExample fe = FacadeExample.getFacadeExample(emf);
         //UserFacade fa = UserFacade.getUserFacade(emf);
