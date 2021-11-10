@@ -1,9 +1,11 @@
 package entities;
 
+import dtos.UserDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class User implements Serializable {
   @JoinTable(name = "user_roles", joinColumns = {
     @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
     @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.PERSIST)
   private List<Role> roleList = new ArrayList<>();
 
   public List<String> getRolesAsStrings() {
@@ -53,13 +55,16 @@ public class User implements Serializable {
    public boolean verifyPassword(String pw){
         return(pw.equals(userPass));
     }
-
+   
   public User(String userName, String userPass) {
     this.userName = userName;
-
     this.userPass = userPass;
   }
-
+   public User(UserDTO u) {
+       // if (u.getId() != null) this.id = u.getId();
+        this.userName = u.getUserName();
+        this.userPass = u.getUserPass();
+    }
 
   public String getUserName() {
     return userName;

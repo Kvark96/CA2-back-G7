@@ -30,12 +30,14 @@ public class Role implements Serializable {
     
     @ManyToMany(mappedBy = "roleList")
     private List<User> userList;
-
+    
+    private User user;
     public Role() {
     }
 
     public Role(String roleName) {
         this.roleName = roleName;
+      
     }
 
     public String getRoleName() {

@@ -1,8 +1,10 @@
 package facades;
 
+import dtos.UserDTO;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.WebApplicationException;
 import security.errorhandling.AuthenticationException;
 
 /**
@@ -42,5 +44,38 @@ public class UserFacade {
         }
         return user;
     }
+    
+      public UserDTO createUserDTO(UserDTO user)throws WebApplicationException {
+        EntityManager em = emf.createEntityManager();
+        User u = new User(user);
+        try {
+            em.getTransaction().begin();
+            if (user == null) {
+                throw new WebApplicationException("Id does not exist");
+            }
+            em.persist(u);     
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new UserDTO(u);
+    }
+      
+       public void removeUser(String userName) throws WebApplicationException{
+        EntityManager em = emf.createEntityManager();
+        User user;
+        try {
+            em.getTransaction().begin();
+            user = em.find(User.class, userName);
+            if (user == null) {
+                throw new WebApplicationException("user name does not exist");
+            }
+            em.remove(user);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+      }  
+    
 
 }
