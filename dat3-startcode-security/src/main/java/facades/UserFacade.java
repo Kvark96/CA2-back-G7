@@ -53,7 +53,7 @@ public class UserFacade {
             if (user == null) {
                 throw new WebApplicationException("Id does not exist");
             }
-            em.persist(u);     
+            em.persist(u);
             em.getTransaction().commit();
         } finally {
             em.close();
