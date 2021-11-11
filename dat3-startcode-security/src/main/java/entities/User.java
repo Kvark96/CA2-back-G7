@@ -52,14 +52,15 @@ public class User implements Serializable {
   public User() {}
 
   //TODO Change when password is hashed
-   public boolean verifyPassword(String pw){
-        return(pw.equals(userPass));
-    }
-   
+  public boolean verifyPassword(String pw){
+    return(BCrypt.checkpw(pw,userPass));
+  }
+
   public User(String userName, String userPass) {
     this.userName = userName;
-    this.userPass = userPass;
+    this.userPass = BCrypt.hashpw(userPass,BCrypt.gensalt());
   }
+  
    public User(UserDTO u) {
        // if (u.getId() != null) this.id = u.getId();
         this.userName = u.getUserName();
