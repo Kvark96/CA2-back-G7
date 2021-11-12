@@ -25,6 +25,7 @@ import utils.EMF_Creator;
  *
  * @author peter
  */
+@Path("weather")
 public class WeatherResource {
     
     //@Context
@@ -38,12 +39,12 @@ public class WeatherResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("weather")
+    
     //@RolesAllowed("user")
-    public String getFromUser() {
+    public String getWeather() {
         
         try {
-        List<List<WeatherDTO>> wDTO = FACADE.getDataFromTwoServers();
+        List<List<Object>> wDTO = FACADE.getDataFromTwoServers();
         return GSON.toJson(wDTO);
         } catch (Exception e) {
             return GSON.toJson(e);

@@ -11,8 +11,8 @@ package dtos;
  */
 public class WeatherDTO {
     
-    private String City;
-    private String Degrees;
-    private String Wind;
+    private String temperature;
+    private String wind;
+    private String description;
     
 }

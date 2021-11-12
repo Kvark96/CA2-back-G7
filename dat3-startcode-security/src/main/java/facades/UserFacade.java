@@ -89,17 +89,19 @@ public class UserFacade {
       }  
     
        
-        public List<List<WeatherDTO>> getDataFromTwoServers() throws ExecutionException, InterruptedException {
+        public List<List<Object>> getDataFromTwoServers() throws ExecutionException, InterruptedException {
 
         String[] hosts = {
                 //URL
             "https://goweather.herokuapp.com/weather/Copenhagen"
+                
+                
         };
 
        ExecutorService executor = Executors.newCachedThreadPool();
         List<Future<String>> futures = new ArrayList<>();
         List<String> data = new ArrayList<>();
-        List<List<WeatherDTO>> response = new ArrayList<>();
+        List<List<Object>> response = new ArrayList<>();
 
         for (String s: hosts) {
             Future future = executor.submit(new ApiFetchCallable(s));
@@ -112,7 +114,7 @@ public class UserFacade {
             data.add(dto);
         }
         
-        List<WeatherDTO> cphWeatherList = new ArrayList<>();
+        List<Object> cphWeatherList = new ArrayList<>();
         cphWeatherList.add(gson.fromJson(data.get(0),WeatherDTO.class));
         response.add(cphWeatherList);
 
