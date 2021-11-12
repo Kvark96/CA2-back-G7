@@ -2,10 +2,20 @@ package facades;
 
 import dtos.UserDTO;
 import entities.User;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.WebApplicationException;
 import security.errorhandling.AuthenticationException;
+import callables.ApiFetchCallable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dtos.WeatherDTO;
 
 /**
  * @author lam@cphbusiness.dk
@@ -14,6 +24,7 @@ public class UserFacade {
 
     private static EntityManagerFactory emf;
     private static UserFacade instance;
+    private Gson gson = new Gson();
 
     private UserFacade() {
     }
@@ -77,5 +88,38 @@ public class UserFacade {
         }
       }  
     
+       
+        public List<List<WeatherDTO>> getDataFromTwoServers() throws ExecutionException, InterruptedException {
 
+        String[] hosts = {
+                //URL
+            "https://goweather.herokuapp.com/weather/Copenhagen"
+        };
+
+       ExecutorService executor = Executors.newCachedThreadPool();
+        List<Future<String>> futures = new ArrayList<>();
+        List<String> data = new ArrayList<>();
+        List<List<WeatherDTO>> response = new ArrayList<>();
+
+        for (String s: hosts) {
+            Future future = executor.submit(new ApiFetchCallable(s));
+            futures.add(future);
+        }
+
+        //Get the results
+        for (Future<String> future : futures) {
+            String dto = future.get();
+            data.add(dto);
+        }
+        
+        List<WeatherDTO> cphWeatherList = new ArrayList<>();
+        cphWeatherList.add(gson.fromJson(data.get(0),WeatherDTO.class));
+        response.add(cphWeatherList);
+
+        return response;
+        }
+        
+    
 }
+
+       
