@@ -46,7 +46,7 @@ public class LoginEndpoint {
             username = json.get("username").getAsString();
             password = json.get("password").getAsString();
         } catch (Exception e) {
-           throw new API_Exception("Malformed JSON Suplied",400,e);
+           throw new API_Exception(e.getMessage(),400,e);
         }
 
         try {
