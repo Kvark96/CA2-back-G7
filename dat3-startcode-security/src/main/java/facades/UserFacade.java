@@ -2,6 +2,7 @@ package facades;
 
 import dtos.UserDTO;
 import entities.User;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,6 +12,7 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.WebApplicationException;
+
 import security.errorhandling.AuthenticationException;
 import callables.ApiFetchCallable;
 import com.google.gson.Gson;
@@ -30,7 +32,6 @@ public class UserFacade {
     }
 
     /**
-     *
      * @param _emf
      * @return the instance of this facade.
      */
@@ -55,8 +56,8 @@ public class UserFacade {
         }
         return user;
     }
-    
-      public UserDTO createUserDTO(UserDTO user)throws WebApplicationException {
+
+    public UserDTO createUserDTO(UserDTO user) throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         User u = new User(user);
         try {
@@ -71,8 +72,8 @@ public class UserFacade {
         }
         return new UserDTO(u);
     }
-      
-       public void removeUser(String userName) throws WebApplicationException{
+
+    public void removeUser(String userName) throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
@@ -86,42 +87,11 @@ public class UserFacade {
         } finally {
             em.close();
         }
-      }  
-    
-       
-        public List<List<Object>> getDataFromTwoServers() throws ExecutionException, InterruptedException {
+    }
 
-        String[] hosts = {
-                //URL
-            "https://goweather.herokuapp.com/weather/Copenhagen"
-                
-                
-        };
 
-       ExecutorService executor = Executors.newCachedThreadPool();
-        List<Future<String>> futures = new ArrayList<>();
-        List<String> data = new ArrayList<>();
-        List<List<Object>> response = new ArrayList<>();
 
-        for (String s: hosts) {
-            Future future = executor.submit(new ApiFetchCallable(s));
-            futures.add(future);
-        }
 
-        //Get the results
-        for (Future<String> future : futures) {
-            String dto = future.get();
-            data.add(dto);
-        }
-        
-        List<Object> cphWeatherList = new ArrayList<>();
-        cphWeatherList.add(gson.fromJson(data.get(0),WeatherDTO.class));
-        response.add(cphWeatherList);
-
-        return response;
-        }
-        
-    
 }
 
        

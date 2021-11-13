@@ -12,7 +12,13 @@ package dtos;
 public class WeatherDTO {
     
     private String temperature;
-    private String wind;
-    private String description;
-    
+    //private String wind;
+    private String name;
+    private String id;
+    private String timezone;
+    private String country;
+
+    public String getCountry() {
+        return country;
+    }
 }
