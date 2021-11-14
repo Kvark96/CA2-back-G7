@@ -1,21 +1,38 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dtos;
 
+/**
+ *
+ * @author EG
+ */
 public class CountryDTO {
-    private String capital;
-    private String population;
+    private CountryNameDTO name;
+    private int population;
+    private String[] continents;
+    private String[] capital;
 
 
-    private class flags {
-        private String png;
+    public String getName() {
+        return name.getCommon();
     }
 
-    private class name {
-        private String common;
-        private String official;
+    public String getOfficialName() {
+        return name.getOfficial();
     }
 
-    private class currencies {
-        private String DKK;
+    public int getPopulation() {
+        return population;
     }
 
+    public String[] getContinents() {
+        return continents;
+    }
+
+    public String[] getCapital() {
+        return capital;
+    }
 }
