@@ -5,20 +5,37 @@
  */
 package dtos;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  *
  * @author peter
  */
 public class WeatherDTO {
-    
-    private String temperature;
-    //private String wind;
+    private int id;
     private String name;
-    private String id;
-    private String timezone;
-    private String country;
+    private int timezone;
+    
+    private WeatherMainDTO main;
+    private WeatherSysDTO sys;
 
+    public int getId() {
+        return id;
+    }
+    
     public String getCountry() {
-        return country;
+        return name;
+    }
+    
+    public String getCountryCode() {
+        return sys.getCountry();
+    }
+    
+    public int getTimezone() {
+        return timezone;
+    }
+    
+    public double getTemperature() {
+        return main.getTemperature();
     }
 }

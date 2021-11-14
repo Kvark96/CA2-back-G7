@@ -7,17 +7,24 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import pojos.CityWeatherInfo;
 import dtos.UserDTO;
 import dtos.WeatherDTO;
 import facades.ServerFacade;
 import facades.UserFacade;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
@@ -39,13 +46,16 @@ public class WeatherResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @POST
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     //@RolesAllowed("user")
-    public String getWeather(String city) {
+    // GET request = @QueryParam
+    // POST request = @FormParam
+    public String getWeather(@QueryParam("city") String city) {
         try {
-            List<String> wDTO = FACADE.getDataFromTwoServers(city);
-            return GSON.toJson(wDTO);
+            CityWeatherInfo cityWeatherInfo = FACADE.getDataFromTwoServers(city);
+
+            return GSON.toJson(cityWeatherInfo);
         } catch (Exception e) {
             return GSON.toJson(e);
         }
