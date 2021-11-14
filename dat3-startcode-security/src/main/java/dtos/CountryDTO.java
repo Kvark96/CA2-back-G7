@@ -13,20 +13,26 @@ public class CountryDTO {
     private CountryNameDTO name;
     private int population;
     private String[] continents;
-    
+    private String[] capital;
+
+
     public String getName() {
         return name.getCommon();
     }
-    
+
     public String getOfficialName() {
         return name.getOfficial();
     }
-    
+
     public int getPopulation() {
         return population;
     }
-    
+
     public String[] getContinents() {
         return continents;
+    }
+
+    public String[] getCapital() {
+        return capital;
     }
 }

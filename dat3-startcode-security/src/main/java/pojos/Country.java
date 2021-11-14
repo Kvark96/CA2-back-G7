@@ -16,12 +16,14 @@ public class Country {
     private String officialName;
     private int population;
     private String[] continents;
+    private String []capital;
     
-    public Country(String name, String officialName, int population, String[] continents) {
+    public Country(String name, String officialName, int population, String[] continents, String[] capital) {
         this.name = name;
         this.officialName = officialName;
         this.population = population;
         this.continents = continents;
+        this.capital = capital;
     }
     
     public String getName() {
@@ -41,6 +43,6 @@ public class Country {
     }
     
     public static Country fromDTO(CountryDTO dto) {
-        return new Country(dto.getName(), dto.getOfficialName(), dto.getPopulation(), dto.getContinents());
+        return new Country(dto.getName(), dto.getOfficialName(), dto.getPopulation(), dto.getContinents(), dto.getCapital());
     }
 }

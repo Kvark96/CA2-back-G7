@@ -46,12 +46,12 @@ public class WeatherResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     //@RolesAllowed("user")
     // GET request = @QueryParam
     // POST request = @FormParam
-    public String getWeather(@QueryParam("city") String city) {
+    public String getWeather(@FormParam("city") String city) {
         try {
             CityWeatherInfo cityWeatherInfo = FACADE.getDataFromTwoServers(city);
 
