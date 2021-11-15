@@ -13,14 +13,14 @@ import dtos.WeatherDTO;
  */
 public class Weather {
     private int id;
-    private String countryName;
+    private String city;
     private String countryCode;
     private int timezone;
     private double temperature;
     
-    public Weather(int id, String countryName, String countryCode, int timezone, double temperature) {
+    public Weather(int id, String city, String countryCode, int timezone, double temperature) {
         this.id = id;
-        this.countryName = countryName;
+        this.city = city;
         this.countryCode = countryCode;
         this.timezone = timezone;
         this.temperature = temperature;
@@ -30,8 +30,8 @@ public class Weather {
         return id;
     }
     
-    public String getCountryName() {
-        return countryName;
+    public String getCity() {
+        return city;
     }
     
     public String getCountryCode() {
@@ -47,6 +47,6 @@ public class Weather {
     }
     
     public static Weather fromDTO(WeatherDTO dto) {
-        return new Weather(dto.getId(), dto.getCountry(), dto.getCountryCode(), dto.getTimezone(), dto.getTemperature());
+        return new Weather(dto.getId(), dto.getCity(), dto.getCountryCode(), dto.getTimezone(), dto.getTemperature());
     }
 }

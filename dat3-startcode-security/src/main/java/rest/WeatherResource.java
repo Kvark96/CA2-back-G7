@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -46,12 +47,13 @@ public class WeatherResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @POST
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     //@RolesAllowed("user")
     // GET request = @QueryParam
     // POST request = @FormParam
-    public String getWeather(@FormParam("city") String city) {
+    public String getWeather(@QueryParam("city") String city) {
         try {
             CityWeatherInfo cityWeatherInfo = FACADE.getDataFromTwoServers(city);
 

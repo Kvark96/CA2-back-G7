@@ -25,7 +25,7 @@ public class WeatherDTO {
 
 
     
-    public String getCountry() {
+    public String getCity() {
         return name;
     }
     
